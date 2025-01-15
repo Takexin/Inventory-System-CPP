@@ -11,9 +11,9 @@ class item {
 public:
   item();
   item(std::string name, int quantity, float price)
-      : name(name), quantity(quantity), price(price);
+      : name(name), quantity(quantity), price(price) {};
   item(std::string name, int quantity, float price, std::string cat)
-      : name(name), quantity(quantity), price(price), category(cat);
+      : name(name), quantity(quantity), price(price), category(cat) {};
 
   void setName(std::string desiredName);
   std::string getName();
@@ -44,5 +44,5 @@ private:
   int numSold;
 };
 
-item::setName(std::string desiredName) { name = desiredName; }
-item::getName() { return name; }
+void item::setName(std::string desiredName) { name = desiredName; }
+std::string item::getName() { return name; }
