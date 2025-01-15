@@ -1,31 +1,33 @@
-//TODO:
-//nome
-//categoria: bebida, higiene, limpeza, etc..;
-//identificador;
-//quantidade;
-//num de prod vendidos;
-//preco
-
+// TODO:
+// nome
+// categoria: bebida, higiene, limpeza, etc..;
+// identificador;
+// quantidade;
+// num de prod vendidos;
+// preco
+#include <iostream>
 
 class item {
 public:
   item();
-  item(std::string name, int quantity, float price) : name(name), quantity(quantity), price(price);
-  item(std::string name, int quantity, float price, std::string cat) : name(name), quantity(quantity), price(price), category(cat);
+  item(std::string name, int quantity, float price)
+      : name(name), quantity(quantity), price(price);
+  item(std::string name, int quantity, float price, std::string cat)
+      : name(name), quantity(quantity), price(price), category(cat);
 
-  setName(std::string desiredName);
-  getName();
+  void setName(std::string desiredName);
+  std::string getName();
 
-  getId();
+  int getId();
 
-  setCategory(std::string desiredCategory);
-  getCategory();
+  void setCategory(std::string desiredCategory);
+  std::string getCategory();
 
-  setPrice(int desiredPrice);
-  getPrice();
+  void setPrice(int desiredPrice);
+  float getPrice();
 
-  setNumSold(int desiredNumSold);
-  getNumSold();
+  void setNumSold(int desiredNumSold);
+  int getNumSold();
 
   item(item &&) = default;
   item(const item &) = default;
@@ -35,17 +37,12 @@ public:
 
 private:
   int id;
+  int quantity;
   std::string name;
   std::string category;
   float price;
   int numSold;
 };
 
-item::setName(std::string desiredName){
-  name = desiredName;
-}
-item::getName(){
-  return name;
-}
-
-
+item::setName(std::string desiredName) { name = desiredName; }
+item::getName() { return name; }
