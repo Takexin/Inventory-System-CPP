@@ -1,2 +1,2 @@
-g++ tests/sqliteTest.cpp -o sqliteTest -Linclude -l sqlite3 && sqliteTest
+g++ ./tests/sqliteTest.cpp -o sqliteTest -L./include -l sqlite3 -I./include -v && openExec.bat 
 @PAUSE	
