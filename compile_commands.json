@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP",
+    "command": "g++ ./tests/tableCreationTest.cpp -o tableCreationTest -L./include -l sqlite3 -I./include -IC:/MinGW/lib/gcc/mingw32/6.3.0/include/c++ -IC:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/mingw32 -IC:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/backward -IC:/MinGW/include -IC:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/tr1 -IC:/MinGW/lib/gcc/mingw32/6.3.0/include -v",
+    "file": "./tests/tableCreationTest.cpp"
+  }
+]
