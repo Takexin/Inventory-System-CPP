@@ -14,7 +14,7 @@ public:
       : name(name), quantity(quantity), price(price) {};
   item(std::string name, int quantity, float price, std::string cat)
       : name(name), quantity(quantity), price(price), category(cat) {};
-
+  item(const char * name, int quantity, float price, const char * cat);
   void setName(std::string desiredName);
   std::string getName();
 
@@ -33,7 +33,6 @@ public:
   item(const item &) = default;
   item &operator=(item &&) = default;
   item &operator=(const item &) = default;
-  ~item();
 
 private:
   int id;
@@ -43,6 +42,16 @@ private:
   float price;
   int numSold;
 };
+
+//string literal constructor
+item::item(const char * cname, int quantity, float price, const char * ccat){
+  std::string stringName = std::string(cname);
+  std::string stringCat = std::string(ccat);
+  name = stringName;
+  quantity = quantity;
+  price = price;
+  category = stringCat;
+}
 
 void item::setName(std::string desiredName) { name = desiredName; }
 std::string item::getName() { return name; }
