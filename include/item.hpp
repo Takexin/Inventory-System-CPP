@@ -14,18 +14,19 @@ public:
       : name(name), quantity(quantity), price(price) {};
   item(std::string name, int quantity, float price, std::string cat)
       : name(name), quantity(quantity), price(price), category(cat) {};
-  item(const char * name, int quantity, float price, const char * cat);
+  item(const char * cname, int desiredQuantity, float desiredPrice, const char * ccat);
   void setName(std::string desiredName);
   std::string getName();
 
-  int getId();
 
   void setCategory(std::string desiredCategory);
   std::string getCategory();
 
-  void setPrice(int desiredPrice);
+  void setPrice(float desiredPrice);
   float getPrice();
 
+  void setQuantity(int desiredQuantity);
+  int getQuantity();
   void setNumSold(int desiredNumSold);
   int getNumSold();
 
@@ -35,7 +36,6 @@ public:
   item &operator=(const item &) = default;
 
 private:
-  int id;
   int quantity;
   std::string name;
   std::string category;
@@ -44,14 +44,28 @@ private:
 };
 
 //string literal constructor
-item::item(const char * cname, int quantity, float price, const char * ccat){
+item::item(const char * cname, int desiredQuantity, float desiredPrice, const char * ccat){
   std::string stringName = std::string(cname);
   std::string stringCat = std::string(ccat);
   name = stringName;
-  quantity = quantity;
-  price = price;
+  quantity = desiredQuantity;
+  price = desiredPrice;
   category = stringCat;
 }
 
 void item::setName(std::string desiredName) { name = desiredName; }
 std::string item::getName() { return name; }
+
+void item::setCategory(std::string desiredCategory){ category = desiredCategory;}
+std::string item::getCategory(){return category;}
+
+void item::setPrice(float desiredPrice){price = desiredPrice;}
+float item::getPrice(){return price;}
+
+void item::setQuantity(int desiredQuantity){quantity = desiredQuantity;}
+int item::getQuantity(){return quantity;}
+void item::setNumSold(int desiredNumSold){numSold = desiredNumSold;}
+int item::getNumSold(){return numSold;}
+
+
+
