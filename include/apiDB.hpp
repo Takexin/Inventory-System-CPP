@@ -79,6 +79,24 @@ void insertItemObject(sqlite3 *DB,item desiredItem){
   }
 
 }
+void insertCat(sqlite3 *DB, std::string desiredCategory){
+  //assuming name only
+  std::string statement = "INSERT INTO categories(name) VALUES('";
+  statement.append(desiredCategory);
+  statement.append("')");
+  std::cout << statement << '\n'; 
+
+    //TODO
+    //EXECUTE FUNCTIONS ONLY IF PREVIOUS ROUTINE DID NOT FAIL
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    bool stepTry = stepItemObject(preparedObject);
+    if (stepTry != false) {
+      terminatePrepared(preparedObject);
+    }
+  }
+
+}
 int idResultQuery(sqlite3_stmt *stHandle, int iCol){
   int verifier = sqlite3_column_int(stHandle, iCol);
   if(!verifier ){
