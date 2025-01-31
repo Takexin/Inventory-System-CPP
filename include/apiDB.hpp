@@ -108,3 +108,49 @@ int searchItem(sqlite3 *DB, std::string objectName){
   }
   return searchResult;
 }
+
+void editItem(sqlite3 *DB, std::string tableName, std::string objectName, std::string desiredColumn ,std::string desiredValue){
+  //table, object, column, value
+  int searchResult = -1;
+  std::string statement = "UPDATE ";
+  statement.append(tableName);
+  statement.append("SET ");
+  statement.append(desiredColumn);
+  statement.append(" = '");
+  statement.append(desiredValue);
+  statement.append("' WHERE id = ");
+  statement.append(std::to_string(searchItem(DB, objectName)));
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    bool stepTry = stepItemObject(preparedObject);
+    if (stepTry != false) {
+      terminatePrepared(preparedObject);
+    }
+    else{
+      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+    }
+  }
+}
+void editItem(sqlite3 *DB, std::string tableName, int objectID, std::string desiredColumn ,std::string desiredValue){
+  //table, object, column, value
+  int searchResult = -1;
+  std::string statement = "UPDATE ";
+  statement.append(tableName);
+  statement.append(" SET ");
+  statement.append(desiredColumn);
+  statement.append(" = '");
+  statement.append(desiredValue);
+  statement.append("' WHERE id = ");
+  statement.append(std::to_string(objectID));
+  std::cout << statement << '\n';
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    bool stepTry = stepItemObject(preparedObject);
+    if (stepTry != false) {
+      terminatePrepared(preparedObject);
+    }
+    else{
+      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+    }
+  }
+}

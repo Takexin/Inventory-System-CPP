@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   std::string stString = "testItem";
   int returnValue = searchItem(DB, stString); 
   std::cout << "ID value of " << stString << ": " << returnValue << '\n';
-
+  editItem(DB, "items", returnValue, "quantity", "727");
   sqlite3_close(DB);
   return 0;
 }
