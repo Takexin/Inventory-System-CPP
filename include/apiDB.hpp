@@ -35,8 +35,8 @@ sqlite3_stmt *prepareItemObject(sqlite3 *DB, std::string &statement){
 }
 bool stepItemObject(sqlite3_stmt *stHandle){
   int result = sqlite3_step(stHandle);
-  if (result != 101){
-    std::cout << "step failed. \n";
+  if (result != 101 && result != 100){
+    std::cout << "step failed. \n" ;
     return false;
   }
   else {
@@ -81,17 +81,17 @@ void insertItemObject(sqlite3 *DB,item desiredItem){
 }
 int idResultQuery(sqlite3_stmt *stHandle, int iCol){
   int verifier = sqlite3_column_int(stHandle, iCol);
-  if(verifier == NULL){
+  if(!verifier ){
     std::cout << "Search unsucessfull, try again";
   }
   else{
-    return verifier
+    return verifier;
   }
   return -1;
 }
 
 int searchItem(sqlite3 *DB, std::string objectName){
-  int searchResult = 0;
+  int searchResult = -1;
   std::string statement = "SELECT id FROM items WHERE name = '" ;
   statement.append(objectName);
   statement.append("'");
@@ -102,5 +102,9 @@ int searchItem(sqlite3 *DB, std::string objectName){
       searchResult = idResultQuery(preparedObject, 0);
       terminatePrepared(preparedObject);
     }
+    else{
+      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+    }
   }
+  return searchResult;
 }
