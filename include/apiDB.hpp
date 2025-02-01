@@ -107,7 +107,23 @@ int idResultQuery(sqlite3_stmt *stHandle, int iCol){
   }
   return -1;
 }
-
+int deleteItem(sqlite3 *DB, std::string objectName){
+  int searchResult = -1;
+  std::string statement = "DELETE FROM items WHERE name = '" ;
+  statement.append(objectName);
+  statement.append("'");
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    bool stepTry = stepItemObject(preparedObject);
+    if (stepTry != false) {
+      terminatePrepared(preparedObject);
+    }
+    else{
+      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+    }
+  }
+  return searchResult;
+}
 int searchItem(sqlite3 *DB, std::string objectName){
   int searchResult = -1;
   std::string statement = "SELECT id FROM items WHERE name = '" ;
