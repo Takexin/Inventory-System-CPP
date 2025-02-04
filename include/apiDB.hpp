@@ -4,7 +4,6 @@
 #include <string>
 
 
-
 void terminatePrepared(sqlite3_stmt *pStmt){
   int verifier = sqlite3_finalize(pStmt);
   if(verifier != 0){
@@ -54,7 +53,34 @@ void createTable(sqlite3 *DB, std::string desiredStatement){
     }
   }
 }
-
+int idResultQuery(sqlite3_stmt *stHandle, int iCol){
+  int verifier = sqlite3_column_int(stHandle, iCol);
+  if(!verifier ){
+    std::cout << "Search unsucessfull, try again";
+  }
+  else{
+    return verifier;
+  }
+  return -1;
+}
+int searchItem(sqlite3 *DB, std::string objectName){
+  int searchResult = -1;
+  std::string statement = "SELECT id FROM items WHERE name = '" ;
+  statement.append(objectName);
+  statement.append("'");
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    bool stepTry = stepItemObject(preparedObject);
+    if (stepTry != false) {
+      searchResult = idResultQuery(preparedObject, 0);
+      terminatePrepared(preparedObject);
+    }
+    else{
+      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+    }
+  }
+  return searchResult;
+}
 void insertItemObject(sqlite3 *DB,item desiredItem){
   //assuming table rows (name, quantity, price, category)
   std::string statement = "INSERT INTO items(name, quantity, price, category_id) VALUES('";
@@ -64,7 +90,7 @@ void insertItemObject(sqlite3 *DB,item desiredItem){
   statement.append(",");
   statement.append(std::to_string(desiredItem.getPrice()));
   statement.append(",'");
-  statement.append(desiredItem.getCategory());
+  statement.append(std::to_string(searchItem(DB, desiredItem.getCategory())));
   statement.append("')");
   std::cout << statement << '\n'; 
 
@@ -97,16 +123,7 @@ void insertCat(sqlite3 *DB, std::string desiredCategory){
   }
 
 }
-int idResultQuery(sqlite3_stmt *stHandle, int iCol){
-  int verifier = sqlite3_column_int(stHandle, iCol);
-  if(!verifier ){
-    std::cout << "Search unsucessfull, try again";
-  }
-  else{
-    return verifier;
-  }
-  return -1;
-}
+
 int deleteItem(sqlite3 *DB, std::string objectName){
   int searchResult = -1;
   std::string statement = "DELETE FROM items WHERE name = '" ;
@@ -124,24 +141,7 @@ int deleteItem(sqlite3 *DB, std::string objectName){
   }
   return searchResult;
 }
-int searchItem(sqlite3 *DB, std::string objectName){
-  int searchResult = -1;
-  std::string statement = "SELECT id FROM items WHERE name = '" ;
-  statement.append(objectName);
-  statement.append("'");
-  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
-  if (preparedObject != nullptr) {
-    bool stepTry = stepItemObject(preparedObject);
-    if (stepTry != false) {
-      searchResult = idResultQuery(preparedObject, 0);
-      terminatePrepared(preparedObject);
-    }
-    else{
-      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
-    }
-  }
-  return searchResult;
-}
+
 
 void editItem(sqlite3 *DB, std::string tableName, std::string objectName, std::string desiredColumn ,std::string desiredValue){
   //table, object, column, value

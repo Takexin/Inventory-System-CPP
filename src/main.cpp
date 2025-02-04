@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   const int itemOpt = 1;
   const int rmvOpt = 3;
   const int searchItemOpt = 4;
-  cosnt int searchCatOpt = 5;
+  const int searchCatOpt = 5;
   
   while(option != exitOpt){
   std::cout << "\nSelect an option:" << "\n" << itemOpt << "-Add item\n" 
