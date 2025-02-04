@@ -6,7 +6,7 @@
 void addItem(sqlite3 *DB);
 void addCat(sqlite3 *DB);
 void removeItem(sqlite3 *DB);
-
+void searchTable(sqlite3 *DB);
 
 int main(int argc, char *argv[]) {
   sqlite3 *DB;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
   const int rmvOpt = 3;
   const int searchItemOpt = 4;
   const int searchCatOpt = 5;
-  
+  const int searchTableOpt = 7; 
   while(option != exitOpt){
   std::cout << "\nSelect an option:" << "\n" << itemOpt << "-Add item\n" 
     << catOpt << "-Add category\n" 
@@ -48,6 +48,10 @@ int main(int argc, char *argv[]) {
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   switch(option){
+    case searchTableOpt:{
+      searchTable(DB);
+      break;
+    }
     case itemOpt:{
       addItem(DB);
       break;
@@ -110,3 +114,12 @@ void removeItem(sqlite3 *DB){
   int deleteVerifier = deleteItem(DB, desiredName);
    
 }
+void searchTable(sqlite3 *DB){
+  std::string desiredName;
+  std::cout << "\n\nPlease provide the name of the item to search: ";
+  std::cin >> desiredName;
+  std::cin.clear();
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  searchItem(DB, desiredName);
+}
+

@@ -56,7 +56,7 @@ void createTable(sqlite3 *DB, std::string desiredStatement){
 int idResultQuery(sqlite3_stmt *stHandle, int iCol){
   int verifier = sqlite3_column_int(stHandle, iCol);
   if(!verifier ){
-    std::cout << "Search unsucessfull, try again";
+    std::cout << "Search unsucessfull, try again\n";
   }
   else{
     return verifier;
@@ -73,7 +73,13 @@ int searchItem(sqlite3 *DB, std::string objectName){
     bool stepTry = stepItemObject(preparedObject);
     if (stepTry != false) {
       searchResult = idResultQuery(preparedObject, 0);
-      terminatePrepared(preparedObject);
+      if(searchResult != -1){
+        terminatePrepared(preparedObject);
+      }
+      else{
+        std::cout << sqlite3_errmsg(DB) << std::endl;
+      }
+
     }
     else{
       std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
@@ -126,20 +132,24 @@ void insertCat(sqlite3 *DB, std::string desiredCategory){
 
 int deleteItem(sqlite3 *DB, std::string objectName){
   int searchResult = -1;
-  std::string statement = "DELETE FROM items WHERE name = '" ;
-  statement.append(objectName);
-  statement.append("'");
+  std::string statement = "DELETE FROM items WHERE id = " ;
+  int searchItemResult = searchItem(DB, objectName);
+  if(searchItemResult != -1){
+  statement.append(std::to_string(searchResult));
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
     bool stepTry = stepItemObject(preparedObject);
     if (stepTry != false) {
       terminatePrepared(preparedObject);
+      return 0;
     }
     else{
       std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
     }
   }
   return searchResult;
+
+  }
 }
 
 
