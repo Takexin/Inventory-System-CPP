@@ -1,4 +1,4 @@
-#include "sqlite3.h"
+#include "../include/sqlite.h"
 #include "item.hpp"
 #include <iostream>
 #include <string>
@@ -155,7 +155,6 @@ int deleteItem(sqlite3 *DB, std::string objectName){
 
 void editItem(sqlite3 *DB, std::string tableName, std::string objectName, std::string desiredColumn ,std::string desiredValue){
   //table, object, column, value
-  int searchResult = -1;
   std::string statement = "UPDATE ";
   statement.append(tableName);
   statement.append("SET ");
@@ -177,7 +176,6 @@ void editItem(sqlite3 *DB, std::string tableName, std::string objectName, std::s
 }
 void editItem(sqlite3 *DB, std::string tableName, int objectID, std::string desiredColumn ,std::string desiredValue){
   //table, object, column, value
-  int searchResult = -1;
   std::string statement = "UPDATE ";
   statement.append(tableName);
   statement.append(" SET ");
