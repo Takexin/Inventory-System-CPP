@@ -135,22 +135,38 @@ int deleteItem(sqlite3 *DB, std::string objectName){
   std::string statement = "DELETE FROM items WHERE id = " ;
   int searchItemResult = searchItem(DB, objectName);
   if(searchItemResult != -1){
-  statement.append(std::to_string(searchResult));
-  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
-  if (preparedObject != nullptr) {
-    bool stepTry = stepItemObject(preparedObject);
-    if (stepTry != false) {
-      terminatePrepared(preparedObject);
-      return 0;
-    }
-    else{
-      std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+    statement.append(std::to_string(searchItemResult));
+    sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+    if (preparedObject != nullptr) {
+      bool stepTry = stepItemObject(preparedObject);
+      if (stepTry != false) {
+        terminatePrepared(preparedObject);
+        return 0;
+      }
+      else{
+        std::cout << sqlite3_errmsg(DB) << '\n';//don't mind the jank
+      }
     }
   }
   return searchResult;
-
-  }
 }
+int multiDeleteItem(sqlite3 *DB, std::string objectName){
+  //prepare statement binding (I'm cool now)
+  std::string statement = "DELETE FROM items WHERE id = ?1";
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    int stepCount = 0;
+    bool stepHandle = true;
+    int bindHandle = sqlite3_bind_text(preparedObject, 1, c_str(objectName), -1, nullptr);
+    if(bindHandle == 100){
+      while(stepHandle == true ){stephandle = stepItemObject(preparedObject); stepCount++;}
+      return stepCount-1;
+    }
+    else{std::cout << sqlite3_errmsg(DB) << '\n';}
+  }
+  return -1;
+}
+
 
 
 void editItem(sqlite3 *DB, std::string tableName, std::string objectName, std::string desiredColumn ,std::string desiredValue){
