@@ -157,9 +157,9 @@ int multiDeleteItem(sqlite3 *DB, std::string objectName){
   if (preparedObject != nullptr) {
     int stepCount = 0;
     bool stepHandle = true;
-    int bindHandle = sqlite3_bind_text(preparedObject, 1, c_str(objectName), -1, nullptr);
+    int bindHandle = sqlite3_bind_text(preparedObject, 1, objectName.c_str(), -1, nullptr);
     if(bindHandle == 100){
-      while(stepHandle == true ){stephandle = stepItemObject(preparedObject); stepCount++;}
+      while(stepHandle == true ){stepHandle = stepItemObject(preparedObject); stepCount++;}
       return stepCount-1;
     }
     else{std::cout << sqlite3_errmsg(DB) << '\n';}
