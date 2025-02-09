@@ -1,1 +1,1 @@
-  -L"C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/include"  -lsqlite3 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+  -L"C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/lib64"  -lsqlite3 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

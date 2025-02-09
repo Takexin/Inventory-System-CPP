@@ -73,15 +73,15 @@ CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj: CMakeFiles/Inventory-Syste
 CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj: C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/src/main.cpp
 CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj: CMakeFiles/Inventory-System-CPP.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj -MF CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.obj.d -o CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.obj -c C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\src\main.cpp
+	C:\ProgramData\mingw64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj -MF CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.obj.d -o CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.obj -c C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\src\main.cpp
 
 CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.i"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\src\main.cpp > CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.i
+	C:\ProgramData\mingw64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\src\main.cpp > CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.i
 
 CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.s"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\src\main.cpp -o CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.s
+	C:\ProgramData\mingw64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Abbaba\Documents\GitHub\Inventory-System-CPP\src\main.cpp -o CMakeFiles\Inventory-System-CPP.dir\src\main.cpp.s
 
 # Object files for target Inventory-System-CPP
 Inventory__System__CPP_OBJECTS = \

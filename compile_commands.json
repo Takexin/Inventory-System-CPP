@@ -1,0 +1,8 @@
+[
+{
+  "directory": "C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/build",
+  "command": "C:\\MinGW\\bin\\c++.exe  @CMakeFiles/Inventory-System-CPP.dir/includes_CXX.rsp -O3 -DNDEBUG -o CMakeFiles\\Inventory-System-CPP.dir\\src\\main.cpp.obj -c C:\\Users\\Abbaba\\Documents\\GitHub\\Inventory-System-CPP\\src\\main.cpp",
+  "file": "C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/src/main.cpp",
+  "output": "CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.obj"
+}
+]
