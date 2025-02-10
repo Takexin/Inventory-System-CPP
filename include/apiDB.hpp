@@ -80,7 +80,7 @@ int searchItem(sqlite3 *DB, std::string objectName) {
 void insertItemObject(sqlite3 *DB, item desiredItem) {
   // assuming table rows (name, quantity, price, category)
   std::string statement =
-      "INSERT INTO items(name, quantity, price, category_id) VALUES('";
+      "INSERT INTO items(name, quantity, price, category_id) VALUES(?1, ?2, ?3, ?4";
   statement.append(desiredItem.getName());
   statement.append("',");
   statement.append(std::to_string(desiredItem.getQuantity()));
