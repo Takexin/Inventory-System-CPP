@@ -58,11 +58,10 @@ int idResultQuery(sqlite3_stmt *stHandle, int iCol) {
 }
 int searchItem(sqlite3 *DB, std::string objectName) {
   int searchResult = -1;
-  std::string statement = "SELECT id FROM items WHERE name = '";
-  statement.append(objectName);
-  statement.append("'");
+  std::string statement = "SELECT id FROM items WHERE name = ?1";
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
+    int bindHandle = sqlite3_bind_text(preparedObject, 1, objectName.c_str(), -1, nullptr);
     bool stepTry = stepItemObject(preparedObject);
     if (stepTry != false) {
       searchResult = idResultQuery(preparedObject, 0);

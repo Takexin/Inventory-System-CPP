@@ -114,7 +114,10 @@ void removeItem(sqlite3 *DB) {
   std::cin >> desiredName;
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-  int deleteVerifier = deleteItem(DB, desiredName);
+  int deleteVerifier = multiDeleteItem(DB, desiredName);
+  if(deleteVerifier == -1){
+    std::cout << "multiDelete Falhou\n";
+  }
 }
 void searchTable(sqlite3 *DB) {
   std::string desiredName;
