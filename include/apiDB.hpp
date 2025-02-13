@@ -77,24 +77,25 @@ int searchItem(sqlite3 *DB, std::string objectName) {
   }
   return searchResult;
 }
-void insertItemObject(sqlite3 *DB, item desiredItem) {
+int insertItemObject(sqlite3 *DB, item desiredItem) {
   // assuming table rows (name, quantity, price, category)
   std::string statement =
-      "INSERT INTO items(name, quantity, price, category_id) VALUES(?1, ?2, ?3, ?4";
-  statement.append(desiredItem.getName());
-  statement.append("',");
-  statement.append(std::to_string(desiredItem.getQuantity()));
-  statement.append(",");
-  statement.append(std::to_string(desiredItem.getPrice()));
-  statement.append(",'");
-  statement.append(std::to_string(searchItem(DB, desiredItem.getCategory())));
-  statement.append("')");
-  std::cout << statement << '\n';
+      "INSERT INTO items(name, quantity, price, category_id) VALUES(?1, ?2, ?3, ?4)";
+  
+ std::cout << statement << '\n';
 
   // TODO
   // EXECUTE FUNCTIONS ONLY IF PREVIOUS ROUTINE DID NOT FAIL
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
+    int bindHandle = sqlite3_bind_text(preparedObject, 1, desiredItem.getName().c_str(),-1,nullptr);
+    if(bindHandle != 0){std::cout << sqlite3_errmsg(DB);return -1;}
+    bindHandle = sqlite3_bind_int(preparedObject, 2, desiredItem.getQuantity());
+    if(bindHandle != 0){std::cout << sqlite3_errmsg(DB);return -1;}
+    bindHandle = sqlite3_bind_double(preparedObject, 3, (double)desiredItem.getPrice());
+    if(bindHandle != 0){std::cout << sqlite3_errmsg(DB);return -1;}
+    bindHandle = sqlite3_bind_int(preparedObject, 4, desiredItem.getQuantity());
+
     bool stepTry = stepItemObject(preparedObject);
     if (stepTry != false) {
       terminatePrepared(preparedObject);
