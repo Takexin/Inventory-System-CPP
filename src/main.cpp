@@ -119,11 +119,4 @@ void removeItem(sqlite3 *DB) {
     std::cout << "multiDelete Falhou\n";
   }
 }
-void searchTable(sqlite3 *DB) {
-  std::string desiredName;
-  std::cout << "\n\nPlease provide the name of the item to search: ";
-  std::cin >> desiredName;
-  std::cin.clear();
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-  searchItem(DB, desiredName);
-}
+void searchTable(sqlite3 *DB) { searchAllItems(DB); }
