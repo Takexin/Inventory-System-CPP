@@ -6,6 +6,7 @@ void addItem(sqlite3 *DB);
 void addCat(sqlite3 *DB);
 void removeItem(sqlite3 *DB);
 void searchTable(sqlite3 *DB);
+void viewCats(sqlite3 *DB);
 
 int main(int argc, char *argv[]) {
   sqlite3 *DB;
@@ -35,18 +36,19 @@ int main(int argc, char *argv[]) {
       "-----------------------\n";
   std::cout << startText << '\n';
   int option = 0;
-  const int exitOpt = 6;
+  const int exitOpt = 7;
   const int catOpt = 2;
   const int itemOpt = 1;
   const int rmvOpt = 3;
-  const int searchItemOpt = 4;
   const int searchCatOpt = 5;
-  const int searchTableOpt = 7;
+  const int searchTableOpt = 4;
   while (option != exitOpt) {
     std::cout << "\nSelect an option:" << "\n"
               << itemOpt << "-Add item\n"
               << catOpt << "-Add category\n"
               << rmvOpt << "-Remove item\n"
+              << searchTableOpt << "-View items\n"
+              << searchCatOpt << "-View categories\n"
               << exitOpt << "-exit\n";
     std::cin >> option;
     std::cin.clear();
@@ -69,6 +71,10 @@ int main(int argc, char *argv[]) {
       break;
     }
     case exitOpt: {
+      break;
+    }
+    case searchCatOpt: {
+      viewCats(DB);
       break;
     }
     }
@@ -119,4 +125,5 @@ void removeItem(sqlite3 *DB) {
     std::cout << "multiDelete Falhou\n";
   }
 }
+void viewCats(sqlite3 *DB) { searchAllCategories(DB); }
 void searchTable(sqlite3 *DB) { searchAllItems(DB); }
