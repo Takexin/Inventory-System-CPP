@@ -9,6 +9,7 @@ void searchTable(sqlite3 *DB);
 void viewCats(sqlite3 *DB);
 
 int main(int argc, char *argv[]) {
+
   sqlite3 *DB;
   int exit = 0;
   exit = sqlite3_open("inventory.db", &DB);
@@ -22,7 +23,8 @@ int main(int argc, char *argv[]) {
   // usr, add itm, add cat, rmv itm, seach items, exit
   const int options[] = {0, 1, 2, 3, 4};
   std::string startText =
-      " ___                      _                     ____            _\n"
+      "\033[1;32m ___                      _                     ____          "
+      "  _\n"
       "|_ _|_ ____   _____ _ __ | |_ ___  _ __ _   _  / ___| _   _ ___| |_ ___ "
       "_ __ ___\n"
       " | || '_ \\ \\ / / _ \\ '_ \\| __/ _ \\| '__| | | | \\___ \\| | | / __| "
@@ -33,8 +35,9 @@ int main(int argc, char *argv[]) {
       "|___/\\__\\___|_| |_| |_|\n"
       "                                         |___/         |___/\n"
       "------------------------------------------------------------------------"
-      "-----------------------\n";
+      "-----------------------\033[0m\n";
   std::cout << startText << '\n';
+  // std::cout << "\033[1;31mbold red text\033[0m\n";
   int option = 0;
   const int exitOpt = 7;
   const int catOpt = 2;
