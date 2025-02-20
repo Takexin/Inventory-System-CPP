@@ -6,8 +6,10 @@ void addItem(sqlite3 *DB);
 void addCat(sqlite3 *DB);
 void removeItem(sqlite3 *DB);
 void searchTable(sqlite3 *DB);
+void viewCats(sqlite3 *DB);
 
 int main(int argc, char *argv[]) {
+
   sqlite3 *DB;
   int exit = 0;
   exit = sqlite3_open("inventory.db", &DB);
@@ -21,7 +23,8 @@ int main(int argc, char *argv[]) {
   // usr, add itm, add cat, rmv itm, seach items, exit
   const int options[] = {0, 1, 2, 3, 4};
   std::string startText =
-      " ___                      _                     ____            _\n"
+      "\033[1;32m ___                      _                     ____          "
+      "  _\n"
       "|_ _|_ ____   _____ _ __ | |_ ___  _ __ _   _  / ___| _   _ ___| |_ ___ "
       "_ __ ___\n"
       " | || '_ \\ \\ / / _ \\ '_ \\| __/ _ \\| '__| | | | \\___ \\| | | / __| "
@@ -32,21 +35,23 @@ int main(int argc, char *argv[]) {
       "|___/\\__\\___|_| |_| |_|\n"
       "                                         |___/         |___/\n"
       "------------------------------------------------------------------------"
-      "-----------------------\n";
+      "-----------------------\033[0m\n";
   std::cout << startText << '\n';
+  // std::cout << "\033[1;31mbold red text\033[0m\n";
   int option = 0;
-  const int exitOpt = 6;
+  const int exitOpt = 7;
   const int catOpt = 2;
   const int itemOpt = 1;
   const int rmvOpt = 3;
-  const int searchItemOpt = 4;
   const int searchCatOpt = 5;
-  const int searchTableOpt = 7;
+  const int searchTableOpt = 4;
   while (option != exitOpt) {
     std::cout << "\nSelect an option:" << "\n"
               << itemOpt << "-Add item\n"
               << catOpt << "-Add category\n"
               << rmvOpt << "-Remove item\n"
+              << searchTableOpt << "-View items\n"
+              << searchCatOpt << "-View categories\n"
               << exitOpt << "-exit\n";
     std::cin >> option;
     std::cin.clear();
@@ -69,6 +74,10 @@ int main(int argc, char *argv[]) {
       break;
     }
     case exitOpt: {
+      break;
+    }
+    case searchCatOpt: {
+      viewCats(DB);
       break;
     }
     }
@@ -115,12 +124,9 @@ void removeItem(sqlite3 *DB) {
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   int deleteVerifier = deleteItem(DB, desiredName);
+  if (deleteVerifier == -1) {
+    std::cout << "multiDelete Falhou\n";
+  }
 }
-void searchTable(sqlite3 *DB) {
-  std::string desiredName;
-  std::cout << "\n\nPlease provide the name of the item to search: ";
-  std::cin >> desiredName;
-  std::cin.clear();
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-  searchItem(DB, desiredName);
-}
+void viewCats(sqlite3 *DB) { searchAllCategories(DB); }
+void searchTable(sqlite3 *DB) { searchAllItems(DB); }

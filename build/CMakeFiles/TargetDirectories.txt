@@ -1,3 +1,0 @@
-C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/build/CMakeFiles/Inventory-System-CPP.dir
-C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/build/CMakeFiles/edit_cache.dir
-C:/Users/Abbaba/Documents/GitHub/Inventory-System-CPP/build/CMakeFiles/rebuild_cache.dir

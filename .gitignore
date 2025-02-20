@@ -1,0 +1,8 @@
+#ignore all cache
+build/CmakeFiles/
+build/CmakeCache.txt
+build/cmake_install.cmake
+
+#ignore all executables
+*.exe
+*.out

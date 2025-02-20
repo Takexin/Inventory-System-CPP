@@ -56,13 +56,13 @@ int idResultQuery(sqlite3_stmt *stHandle, int iCol) {
   }
   return -1;
 }
-int searchItem(sqlite3 *DB, std::string objectName) {
+int searchCat(sqlite3 *DB, std::string objectName) {
   int searchResult = -1;
-  std::string statement = "SELECT id FROM items WHERE name = '";
-  statement.append(objectName);
-  statement.append("'");
+  std::string statement = "SELECT id FROM categories WHERE name = ?1";
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
+    int bindHandle =
+        sqlite3_bind_text(preparedObject, 1, objectName.c_str(), -1, nullptr);
     bool stepTry = stepItemObject(preparedObject);
     if (stepTry != false) {
       searchResult = idResultQuery(preparedObject, 0);
@@ -78,29 +78,128 @@ int searchItem(sqlite3 *DB, std::string objectName) {
   }
   return searchResult;
 }
-void insertItemObject(sqlite3 *DB, item desiredItem) {
+int searchAllCategories(sqlite3 *DB) {
+
+  std::string statement = "SELECT name FROM categories";
+  sqlite3_stmt *prepareStatement = prepareItemObject(DB, statement);
+  std::string catName = "";
+  std::cout << "CATEGORY NAME\n";
+  int stepHandle = 0;
+  do {
+    stepHandle = sqlite3_step(prepareStatement);
+    if (stepHandle != SQLITE_ROW) {
+      return -1;
+    }
+    catName = std::string(reinterpret_cast<const char *>(
+        sqlite3_column_text(prepareStatement, 0)));
+    std::cout << catName << '\n';
+
+  } while (stepHandle == SQLITE_ROW);
+  return 1;
+}
+int searchAllItems(sqlite3 *DB) {
+  // gathered values (text, int, double, text)
+  // QUERY - SELECT name,quantity,price,categories.name FROM items INNER JOIN
+  // categories ON categories.id = items.category_id
+  std::string statement = "SELECT name,quantity,price,category_id FROM items ";
+  //      "categories ON categories.id = items.category_id";
+  sqlite3_stmt *prepareStatement = prepareItemObject(DB, statement);
+  std::string itemName = "";
+  int itemQuantity = 0;
+  double itemPrice = 0;
+  std::string catName = "";
+  int stepHandle = 0;
+  std::cout << "NAME     QUANTITY     PRICE     CATEGORY\n";
+  do {
+    stepHandle = sqlite3_step(prepareStatement);
+    if (stepHandle != SQLITE_ROW) {
+      return -1;
+    }
+    itemName = std::string(reinterpret_cast<const char *>(
+        sqlite3_column_text(prepareStatement, 0)));
+    itemQuantity = sqlite3_column_int(prepareStatement, 1);
+    itemPrice = sqlite3_column_double(prepareStatement, 2);
+    const unsigned char *ccat = sqlite3_column_text(prepareStatement, 3);
+    catName = (ccat != nullptr)
+                  ? std::string(reinterpret_cast<const char *>(ccat))
+                  : "NULL";
+    std::cout << itemName << " - " << itemQuantity << " - " << itemPrice
+              << " - " << catName << '\n';
+  } while (stepHandle == SQLITE_ROW);
+  return 1;
+}
+int searchItem(sqlite3 *DB, std::string objectName) {
+  int searchResult = -1;
+  std::string statement = "SELECT id FROM items WHERE name = ?1";
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    int bindHandle =
+        sqlite3_bind_text(preparedObject, 1, objectName.c_str(), -1, nullptr);
+    bool stepTry = stepItemObject(preparedObject);
+    if (stepTry != false) {
+      searchResult = idResultQuery(preparedObject, 0);
+      if (searchResult != -1) {
+        terminatePrepared(preparedObject);
+      } else {
+        std::cout << sqlite3_errmsg(DB) << std::endl;
+      }
+
+    } else {
+      std::cout << sqlite3_errmsg(DB) << '\n'; // don't mind the jank
+    }
+  }
+  return searchResult;
+}
+int insertItemObject(sqlite3 *DB, item desiredItem) {
   // assuming table rows (name, quantity, price, category)
-  std::string statement =
-      "INSERT INTO items(name, quantity, price, category_id) VALUES('";
-  statement.append(desiredItem.getName());
-  statement.append("',");
-  statement.append(std::to_string(desiredItem.getQuantity()));
-  statement.append(",");
-  statement.append(std::to_string(desiredItem.getPrice()));
-  statement.append(",'");
-  statement.append(std::to_string(searchItem(DB, desiredItem.getCategory())));
-  statement.append("')");
+  std::string statement = "INSERT INTO items(name, quantity, price, "
+                          "category_id) VALUES(?1, ?2, ?3, ?4)";
+
   std::cout << statement << '\n';
 
   // TODO
   // EXECUTE FUNCTIONS ONLY IF PREVIOUS ROUTINE DID NOT FAIL
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
+    int bindHandle = sqlite3_bind_text(
+        preparedObject, 1, desiredItem.getName().c_str(), -1, nullptr);
+    if (bindHandle != 0) {
+      std::cout << sqlite3_errmsg(DB);
+      return -1;
+    }
+    bindHandle = sqlite3_bind_int(preparedObject, 2, desiredItem.getQuantity());
+    if (bindHandle != 0) {
+      std::cout << sqlite3_errmsg(DB);
+      return -1;
+    }
+    bindHandle =
+        sqlite3_bind_double(preparedObject, 3, (double)desiredItem.getPrice());
+    if (bindHandle != 0) {
+      std::cout << sqlite3_errmsg(DB);
+      return -1;
+    }
+    std::string itemCat = desiredItem.getCategory();
+    if (itemCat.compare("null") == 0) {
+      bindHandle = sqlite3_bind_null(preparedObject, 4);
+    } else {
+      int catSearch = searchCat(DB, itemCat);
+      if (catSearch != -1) {
+        bindHandle = sqlite3_bind_int(preparedObject, 4, catSearch);
+      } else {
+        return -1;
+        std::cout << "Category not found, try again.\n";
+      }
+    }
+    if (bindHandle != 0) {
+      std::cout << sqlite3_errmsg(DB);
+      return -1;
+    }
     bool stepTry = stepItemObject(preparedObject);
     if (stepTry != false) {
       terminatePrepared(preparedObject);
     }
   }
+  return 1;
 }
 void insertCat(sqlite3 *DB, std::string desiredCategory) {
   // assuming name only
@@ -121,42 +220,30 @@ void insertCat(sqlite3 *DB, std::string desiredCategory) {
 }
 
 int deleteItem(sqlite3 *DB, std::string objectName) {
-  int searchResult = -1;
-  std::string statement = "DELETE FROM items WHERE id = ";
-  int searchItemResult = searchItem(DB, objectName);
-  if (searchItemResult != -1) {
-    statement.append(std::to_string(searchItemResult));
-    sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
-    if (preparedObject != nullptr) {
-      bool stepTry = stepItemObject(preparedObject);
-      if (stepTry != false) {
-        terminatePrepared(preparedObject);
-        return 0;
-      } else {
-        std::cout << sqlite3_errmsg(DB) << '\n'; // don't mind the jank
-      }
-    }
-  }
-  return searchResult;
-}
-int multiDeleteItem(sqlite3 *DB, std::string objectName) {
   // prepare statement binding (I'm cool now)
-  std::string statement = "DELETE FROM items WHERE id = ?1";
+  // first search if valid item
+  int searchHandle = searchItem(DB, objectName);
+  if (searchHandle == -1) {
+    return -1;
+  }
+  std::string statement = "DELETE FROM items WHERE name = ?1";
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
     int stepCount = 0;
-    bool stepHandle = true;
+    int stepHandle = 0;
     int bindHandle =
         sqlite3_bind_text(preparedObject, 1, objectName.c_str(), -1, nullptr);
-    if (bindHandle == 100) {
-      while (stepHandle == true) {
-        stepHandle = stepItemObject(preparedObject);
-        stepCount++;
+    if (bindHandle == SQLITE_OK) {
+      stepHandle = sqlite3_step(preparedObject);
+      std::cout << "StepHandle value: " << stepHandle << '\n';
+      if (stepHandle == SQLITE_DONE) {
+        return 1;
+      } else {
+        return -1;
       }
-      return stepCount - 1;
-    } else {
-      std::cout << sqlite3_errmsg(DB) << '\n';
     }
+  } else {
+    std::cout << sqlite3_errmsg(DB) << '\n';
   }
   return -1;
 }
