@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\Inventory-System-CPP.dir/objects.a
-C:\ProgramData\mingw64\mingw64\bin\ar.exe qc CMakeFiles\Inventory-System-CPP.dir/objects.a @CMakeFiles\Inventory-System-CPP.dir\objects1.rsp
-C:\ProgramData\mingw64\mingw64\bin\c++.exe -Wl,--whole-archive CMakeFiles\Inventory-System-CPP.dir/objects.a -Wl,--no-whole-archive -o Inventory-System-CPP.exe -Wl,--out-implib,libInventory-System-CPP.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Inventory-System-CPP.dir\linkLibs.rsp
