@@ -7,6 +7,7 @@
 #include <Wt/WString.h>
 #include <Wt/WText.h>
 #include <memory>
+#include <vector>
 
 class itemWidget : public Wt::WContainerWidget {
 public:
@@ -53,24 +54,26 @@ private:
 HelloApplication::HelloApplication(const Wt::WEnvironment &env)
     : Wt::WApplication(env) {
   setTitle("Hello World");
-  useStyleSheet("style.css");
-  item testItem("test", 10, 1.0, "category");
-  testItem.setId(1);
-  root()->addNew<itemWidget>(testItem);
-  (*root()).addNew<Wt::WBreak>();
-  Wt::WPushButton *button = root()->addNew<Wt::WPushButton>("Select all");
-  (*root()).addNew<Wt::WBreak>();
-  greeting_ = root()->addNew<Wt::WText>();
-  auto greet = [this] {
-    sqlite3 *DB;
+  sqlite3 *DB;
     int exit = 0;
     exit = sqlite3_open("inventory.db", &DB);
     if (exit) {
       std::cerr << "Error opening DB " << sqlite3_errmsg(DB) << std::endl;
     }
+  useStyleSheet("style.css");
+  item testItem("test", 10, 1.0, "category");
+  std::vector <item> itemVect;
+  searchAllItems(DB, itemVect);
+  testItem.setId(1);
+  root()->addNew<itemWidget>(itemVect[0]);
+  (*root()).addNew<Wt::WBreak>();
+  Wt::WPushButton *button = root()->addNew<Wt::WPushButton>("Select all");
+  (*root()).addNew<Wt::WBreak>();
+  greeting_ = root()->addNew<Wt::WText>();
+  auto greet = [this] {
+    
 
     std::string returnStr = "";
-    searchAllItems(DB, returnStr);
     greeting_->setText(returnStr);
   };
   button->clicked().connect(greet);
