@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.o"
-  "CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.o.d"
+  "CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.o"
+  "CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.o.d"
   "Inventory-System-CPP"
   "Inventory-System-CPP.pdb"
 )

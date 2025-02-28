@@ -1,1 +1,1 @@
-/usr/bin/c++ "CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.o" -o Inventory-System-CPP  /usr/lib/libsqlite3.so
+/usr/bin/c++ "CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.o" -o Inventory-System-CPP  /usr/lib/libsqlite3.so -lwt -lwthttp

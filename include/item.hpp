@@ -14,10 +14,10 @@ public:
       : name(name), quantity(quantity), price(price) {};
   item(std::string name, int quantity, float price, std::string cat)
       : name(name), quantity(quantity), price(price), category(cat) {};
-  item(const char * cname, int desiredQuantity, float desiredPrice, const char * ccat);
+  item(const char *cname, int desiredQuantity, float desiredPrice,
+       const char *ccat);
   void setName(std::string desiredName);
   std::string getName();
-
 
   void setCategory(std::string desiredCategory);
   std::string getCategory();
@@ -30,12 +30,16 @@ public:
   void setNumSold(int desiredNumSold);
   int getNumSold();
 
+  void setId(int num);
+  int getId();
+
   item(item &&) = default;
   item(const item &) = default;
   item &operator=(item &&) = default;
   item &operator=(const item &) = default;
 
 private:
+  int id;
   int quantity;
   std::string name;
   std::string category;
@@ -43,8 +47,9 @@ private:
   int numSold;
 };
 
-//string literal constructor
-item::item(const char * cname, int desiredQuantity, float desiredPrice, const char * ccat){
+// string literal constructor
+item::item(const char *cname, int desiredQuantity, float desiredPrice,
+           const char *ccat) {
   std::string stringName = std::string(cname);
   std::string stringCat = std::string(ccat);
   name = stringName;
@@ -56,16 +61,17 @@ item::item(const char * cname, int desiredQuantity, float desiredPrice, const ch
 void item::setName(std::string desiredName) { name = desiredName; }
 std::string item::getName() { return name; }
 
-void item::setCategory(std::string desiredCategory){ category = desiredCategory;}
-std::string item::getCategory(){return category;}
+void item::setCategory(std::string desiredCategory) {
+  category = desiredCategory;
+}
+std::string item::getCategory() { return category; }
 
-void item::setPrice(float desiredPrice){price = desiredPrice;}
-float item::getPrice(){return price;}
+void item::setPrice(float desiredPrice) { price = desiredPrice; }
+float item::getPrice() { return price; }
 
-void item::setQuantity(int desiredQuantity){quantity = desiredQuantity;}
-int item::getQuantity(){return quantity;}
-void item::setNumSold(int desiredNumSold){numSold = desiredNumSold;}
-int item::getNumSold(){return numSold;}
-
-
-
+void item::setQuantity(int desiredQuantity) { quantity = desiredQuantity; }
+int item::getQuantity() { return quantity; }
+void item::setNumSold(int desiredNumSold) { numSold = desiredNumSold; }
+int item::getNumSold() { return numSold; }
+void item::setId(int num) { id = num; }
+int item::getId() { return id; }

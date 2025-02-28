@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/takeshi/projects/Inventory-System-CPP/include
+CXX_INCLUDES = -I/home/takeshi/projects/Inventory-System-CPP/include -I/usr/local/include/Wt
 
 CXX_FLAGS = 
 

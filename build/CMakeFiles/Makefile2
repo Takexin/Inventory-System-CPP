@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /home/takeshi/projects/Inventory-System-CPP/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all:
+all: CMakeFiles/Inventory-System-CPP.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen:
+codegen: CMakeFiles/Inventory-System-CPP.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,8 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean:
+clean: CMakeFiles/Inventory-System-CPP.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/Inventory-System-CPP.dir
+
+# All Build rule for target.
+CMakeFiles/Inventory-System-CPP.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles --progress-num=1,2 "Built target Inventory-System-CPP"
+.PHONY : CMakeFiles/Inventory-System-CPP.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/Inventory-System-CPP.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Inventory-System-CPP.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles 0
+.PHONY : CMakeFiles/Inventory-System-CPP.dir/rule
+
+# Convenience name for target.
+Inventory-System-CPP: CMakeFiles/Inventory-System-CPP.dir/rule
+.PHONY : Inventory-System-CPP
+
+# codegen rule for target.
+CMakeFiles/Inventory-System-CPP.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles --progress-num=1,2 "Finished codegen for target Inventory-System-CPP"
+.PHONY : CMakeFiles/Inventory-System-CPP.dir/codegen
+
+# clean rule for target.
+CMakeFiles/Inventory-System-CPP.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/clean
+.PHONY : CMakeFiles/Inventory-System-CPP.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

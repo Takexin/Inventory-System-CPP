@@ -116,6 +116,43 @@ depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+#=============================================================================
+# Target rules for targets named Inventory-System-CPP
+
+# Build rule for target.
+Inventory-System-CPP: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Inventory-System-CPP
+.PHONY : Inventory-System-CPP
+
+# fast build rule for target.
+Inventory-System-CPP/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/build
+.PHONY : Inventory-System-CPP/fast
+
+tests/cssAPI.o: tests/cssAPI.cpp.o
+.PHONY : tests/cssAPI.o
+
+# target to build an object file
+tests/cssAPI.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.o
+.PHONY : tests/cssAPI.cpp.o
+
+tests/cssAPI.i: tests/cssAPI.cpp.i
+.PHONY : tests/cssAPI.i
+
+# target to preprocess a source file
+tests/cssAPI.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.i
+.PHONY : tests/cssAPI.cpp.i
+
+tests/cssAPI.s: tests/cssAPI.cpp.s
+.PHONY : tests/cssAPI.s
+
+# target to generate assembly for a file
+tests/cssAPI.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Inventory-System-CPP.dir/build.make CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.s
+.PHONY : tests/cssAPI.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -124,6 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... Inventory-System-CPP"
+	@echo "... tests/cssAPI.o"
+	@echo "... tests/cssAPI.i"
+	@echo "... tests/cssAPI.s"
 .PHONY : help
 
 

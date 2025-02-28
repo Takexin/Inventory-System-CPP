@@ -108,6 +108,8 @@ void addItem(sqlite3 *DB) {
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   item desiredItem(desiredName, desiredQuantity, desiredPrice, desiredCat);
   insertItemObject(DB, desiredItem);
+  std::cout << desiredItem.getName() << '\n';
+  std::cout << desiredItem.getCategory() << '\n';
 }
 void addCat(sqlite3 *DB) {
   std::string desiredName;

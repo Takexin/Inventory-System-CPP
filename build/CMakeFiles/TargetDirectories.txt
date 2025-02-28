@@ -1,2 +1,3 @@
+/home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles/Inventory-System-CPP.dir
 /home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles/edit_cache.dir
 /home/takeshi/projects/Inventory-System-CPP/build/CMakeFiles/rebuild_cache.dir

@@ -97,6 +97,40 @@ int searchAllCategories(sqlite3 *DB) {
   } while (stepHandle == SQLITE_ROW);
   return 1;
 }
+int searchAllItems(sqlite3 *DB, std::string &resultString) {
+  // gathered values (text, int, double, text)
+  // QUERY - SELECT name,quantity,price,categories.name FROM items INNER JOIN
+  // categories ON categories.id = items.category_id
+  std::string statement = "SELECT name,quantity,price,category_id FROM items ";
+  //      "categories ON categories.id = items.category_id";
+  sqlite3_stmt *prepareStatement = prepareItemObject(DB, statement);
+  std::string itemName = "";
+  int itemQuantity = 0;
+  double itemPrice = 0;
+  std::string catName = "";
+  int stepHandle = 0;
+  resultString = "NAME     QUANTITY     PRICE     CATEGORY\n";
+  do {
+    stepHandle = sqlite3_step(prepareStatement);
+    if (stepHandle != SQLITE_ROW) {
+      return -1;
+    }
+    itemName = std::string(reinterpret_cast<const char *>(
+        sqlite3_column_text(prepareStatement, 0)));
+    itemQuantity = sqlite3_column_int(prepareStatement, 1);
+    itemPrice = sqlite3_column_double(prepareStatement, 2);
+    const unsigned char *ccat = sqlite3_column_text(prepareStatement, 3);
+    catName = (ccat != nullptr)
+                  ? std::string(reinterpret_cast<const char *>(ccat))
+                  : "NULL";
+    std::cout << itemName << " - " << itemQuantity << " - " << itemPrice
+              << " - " << catName << '\n';
+    resultString += itemName + " - " + std::to_string(itemQuantity) + " - " +
+                    std::to_string(itemPrice) + " - " + catName + '\n';
+
+  } while (stepHandle == SQLITE_ROW);
+  return 1;
+}
 int searchAllItems(sqlite3 *DB) {
   // gathered values (text, int, double, text)
   // QUERY - SELECT name,quantity,price,categories.name FROM items INNER JOIN
@@ -155,13 +189,14 @@ int insertItemObject(sqlite3 *DB, item desiredItem) {
   std::string statement = "INSERT INTO items(name, quantity, price, "
                           "category_id) VALUES(?1, ?2, ?3, ?4)";
 
-  std::cout << statement << '\n';
-
   // TODO
   // EXECUTE FUNCTIONS ONLY IF PREVIOUS ROUTINE DID NOT FAIL
   sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
   if (preparedObject != nullptr) {
+    std::cout << "DESIRED NAME: " << desiredItem.getName() << '\n';
+
     int bindHandle = sqlite3_bind_text(
+
         preparedObject, 1, desiredItem.getName().c_str(), -1, nullptr);
     if (bindHandle != 0) {
       std::cout << sqlite3_errmsg(DB);
