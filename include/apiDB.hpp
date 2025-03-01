@@ -1,7 +1,7 @@
 #include "item.hpp"
 #include "sqlite3.h"
-#include <vector>
 #include <string>
+#include <vector>
 
 void terminatePrepared(sqlite3_stmt *pStmt) {
   int verifier = sqlite3_finalize(pStmt);
@@ -132,14 +132,16 @@ int searchAllItems(sqlite3 *DB, std::string &resultString) {
   } while (stepHandle == SQLITE_ROW);
   return 1;
 }
-int searchAllItems(sqlite3 *DB, std::vector <item> &itemVect) {
+int searchAllItems(sqlite3 *DB, std::vector<item> &itemVect) {
   // gathered values (text, int, double, text)
   // QUERY - SELECT name,quantity,price,categories.name FROM items INNER JOIN
   // categories ON categories.id = items.category_id
-  std::string statement = "SELECT name,quantity,price,category_id FROM items ";
+  std::string statement =
+      "SELECT name,quantity,price,category_id, id FROM items ";
   //      "categories ON categories.id = items.category_id";
   sqlite3_stmt *prepareStatement = prepareItemObject(DB, statement);
   std::string itemName = "";
+  int itemID = 0;
   int itemQuantity = 0;
   double itemPrice = 0;
   std::string catName = "";
@@ -157,10 +159,12 @@ int searchAllItems(sqlite3 *DB, std::vector <item> &itemVect) {
     catName = (ccat != nullptr)
                   ? std::string(reinterpret_cast<const char *>(ccat))
                   : "NULL";
+    itemID = sqlite3_column_int(prepareStatement, 4);
     std::cout << itemName << " - " << itemQuantity << " - " << itemPrice
               << " - " << catName << '\n';
-    itemVect.push_back(item(itemName, itemQuantity, itemPrice, catName));
-
+    item currentItem(itemName, itemQuantity, itemPrice, catName);
+    currentItem.setId(itemID);
+    itemVect.push_back(currentItem);
 
   } while (stepHandle == SQLITE_ROW);
   return 1;

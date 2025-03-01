@@ -12,6 +12,7 @@
 class itemWidget : public Wt::WContainerWidget {
 public:
   itemWidget(item &desiredItem);
+  itemWidget();
 };
 
 itemWidget::itemWidget(item &desiredItem) {
@@ -41,6 +42,32 @@ itemWidget::itemWidget(item &desiredItem) {
   price->addStyleClass("box");
   price->setId("quantity");
 }
+itemWidget::itemWidget() {
+  addStyleClass("item-container");
+  auto id = addWidget(std::make_unique<Wt::WText>(Wt::WString("<p>ID</p>")));
+  id->addStyleClass("box");
+  id->setId("id");
+
+  auto name =
+      addWidget(std::make_unique<Wt::WText>(Wt::WString("<p>NAME</p>")));
+  name->addStyleClass("box");
+  name->setId("name");
+
+  auto category =
+      addWidget(std::make_unique<Wt::WText>(Wt::WString("<p>CATEGORY</p>")));
+  category->addStyleClass("box");
+  category->setId("name");
+
+  auto quantity =
+      addWidget(std::make_unique<Wt::WText>(Wt::WString("<p>QUANTITY</p>")));
+  quantity->addStyleClass("box");
+  quantity->setId("quantity");
+
+  auto price =
+      addWidget(std::make_unique<Wt::WText>(Wt::WString("<p>PRICE</p>")));
+  price->addStyleClass("box");
+  price->setId("quantity");
+}
 
 class HelloApplication : public Wt::WApplication {
 public:
@@ -55,24 +82,28 @@ HelloApplication::HelloApplication(const Wt::WEnvironment &env)
     : Wt::WApplication(env) {
   setTitle("Hello World");
   sqlite3 *DB;
-    int exit = 0;
-    exit = sqlite3_open("inventory.db", &DB);
-    if (exit) {
-      std::cerr << "Error opening DB " << sqlite3_errmsg(DB) << std::endl;
-    }
+  int exit = 0;
+  exit = sqlite3_open("inventory.db", &DB);
+  if (exit) {
+    std::cerr << "Error opening DB " << sqlite3_errmsg(DB) << std::endl;
+  }
   useStyleSheet("style.css");
-  item testItem("test", 10, 1.0, "category");
-  std::vector <item> itemVect;
+
+  std::vector<item> itemVect;
   searchAllItems(DB, itemVect);
-  testItem.setId(1);
-  root()->addNew<itemWidget>(itemVect[0]);
+  root()->addNew<itemWidget>();
+  (*root()).addNew<Wt::WBreak>();
+  (*root()).addNew<Wt::WBreak>();
+
+  for (int i = 0; i < itemVect.size(); i++) {
+    root()->addNew<itemWidget>(itemVect[i]);
+    (*root()).addNew<Wt::WBreak>();
+  }
   (*root()).addNew<Wt::WBreak>();
   Wt::WPushButton *button = root()->addNew<Wt::WPushButton>("Select all");
   (*root()).addNew<Wt::WBreak>();
   greeting_ = root()->addNew<Wt::WText>();
   auto greet = [this] {
-    
-
     std::string returnStr = "";
     greeting_->setText(returnStr);
   };
