@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/takeshi/projects/Inventory-System-CPP/build",
-  "command": "/usr/bin/c++  -I/home/takeshi/projects/Inventory-System-CPP/include  -o CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.o -c /home/takeshi/projects/Inventory-System-CPP/src/main.cpp",
+  "command": "/usr/bin/c++  -I/home/takeshi/projects/Inventory-System-CPP/include  -o CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.o -c /home/takeshi/projects/Inventory-System-CPP/src/main.cpp -I ./include",
   "file": "/home/takeshi/projects/Inventory-System-CPP/src/main.cpp",
   "output": "CMakeFiles/Inventory-System-CPP.dir/src/main.cpp.o"
 }

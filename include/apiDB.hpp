@@ -291,7 +291,28 @@ void insertCat(sqlite3 *DB, std::string desiredCategory) {
     }
   }
 }
-
+int deleteItem(sqlite3 *DB, int objectID) {
+  // prepare statement binding (I'm cool now)
+  std::string statement = "DELETE FROM items WHERE id = ?1";
+  sqlite3_stmt *preparedObject = prepareItemObject(DB, statement);
+  if (preparedObject != nullptr) {
+    int stepCount = 0;
+    int stepHandle = 0;
+    int bindHandle = sqlite3_bind_int(preparedObject, 1, objectID);
+    if (bindHandle == SQLITE_OK) {
+      stepHandle = sqlite3_step(preparedObject);
+      std::cout << "StepHandle value: " << stepHandle << '\n';
+      if (stepHandle == SQLITE_DONE) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  } else {
+    std::cout << sqlite3_errmsg(DB) << '\n';
+  }
+  return -1;
+}
 int deleteItem(sqlite3 *DB, std::string objectName) {
   // prepare statement binding (I'm cool now)
   // first search if valid item

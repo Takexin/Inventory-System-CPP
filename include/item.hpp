@@ -33,9 +33,9 @@ public:
   void setId(int num);
   int getId();
 
-  item(item &&) = default;
+  item(item &&);
   item(const item &) = default;
-  item &operator=(item &&) = default;
+  item &operator=(item &other);
   item &operator=(const item &) = default;
 
 private:
@@ -47,7 +47,15 @@ private:
   int numSold;
 };
 
+// default constructor
+item::item() {
+  name = "";
+  quantity = 0;
+  price = 0.0;
+  category = "";
+}
 // string literal constructor
+
 item::item(const char *cname, int desiredQuantity, float desiredPrice,
            const char *ccat) {
   std::string stringName = std::string(cname);
@@ -75,3 +83,10 @@ void item::setNumSold(int desiredNumSold) { numSold = desiredNumSold; }
 int item::getNumSold() { return numSold; }
 void item::setId(int num) { id = num; }
 int item::getId() { return id; }
+item &item::operator=(item &other) {
+  this->setName(other.name);
+  this->setQuantity(other.quantity);
+  this->setPrice(other.price);
+  this->setCategory(other.category);
+  return *this;
+}
