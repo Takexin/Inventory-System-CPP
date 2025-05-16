@@ -1,1 +1,1 @@
-/usr/sbin/c++ -Wl,--dependency-file=CMakeFiles/Inventory-System-CPP.dir/link.d "CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.o" -o Inventory-System-CPP  /usr/lib/libsqlite3.so -lwt -lwthttp
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Inventory-System-CPP.dir/link.d "CMakeFiles/Inventory-System-CPP.dir/tests/cssAPI.cpp.o" -o Inventory-System-CPP  /usr/lib/libsqlite3.so -lwt -lwthttp
